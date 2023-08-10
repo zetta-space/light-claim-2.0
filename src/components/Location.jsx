@@ -26,7 +26,7 @@ const LocationComponent = ({ length }) => {
   
   return (
     <TouchableOpacity
-      className="px-2 py-3 border-none rounded-lg w-full flex flex-row justify-center items-center space-x-2 bg-primaryBg border-[1px] border-primaryGray"
+      className="px-2 py-3 border-none rounded-lg w-full flex flex-row justify-center items-center space-x-2 bg-primaryBg border-[1px] border-primaryGray">
       <Icon name="pin-outline" width={20} height={20} fill="#020617" />
       <Text className="text-sm font-medium capitalize text-secondaryDark">
         {length > 0 ? _text : "set location"}

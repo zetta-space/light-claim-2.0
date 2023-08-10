@@ -23,9 +23,6 @@ const CameraComponent = () => {
   if (!permission.granted) {
     return (
       <View className="flex-1 justify-center items-center">
-
-        <Text className="text-base font-medium px-2 text-center">
-          Requesting permission to access the camera
         <Text style={{ textAlign: "center" }}>
           We need your permission to show the camera
         </Text>
