@@ -3,8 +3,12 @@ import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
 import { TextInput } from "react-native";
 import { TouchableOpacity } from "react-native";
+import CameraComponent from "../components/Camera";
+import { useNavigation } from "@react-navigation/native";
 
 const NewRecordScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView className="bg-primaryBg w-full py-8 h-auto">
       <ScrollView>
@@ -23,7 +27,7 @@ const NewRecordScreen = () => {
             <Text className="text-sm font-semibold capitalize">Images</Text>
             <TouchableOpacity
               className="px-4 py-3 border-none rounded-lg w-full flex flex-row justify-center items-center space-x-2 bg-secondaryBlue"
-              onPress={() => console.log("Clicked")}
+              onPress={() => navigation.navigate('Camera')}
             >
               <Icon
                 name="cloud-upload-outline"
@@ -40,7 +44,7 @@ const NewRecordScreen = () => {
             <Text className="text-sm font-semibold capitalize">Location</Text>
             <TouchableOpacity
               className="px-2 py-3 border-none rounded-lg w-full flex flex-row justify-center items-center space-x-2 bg-primaryBg border-[1px] border-primaryGray"
-              onPress={() => console.log("Clicked Location")}
+              onPress={() => alert("set location")}
             >
               <Icon name="pin-outline" width={20} height={20} fill="#020617" />
               <Text className="text-sm font-medium capitalize text-secondaryDark">
@@ -60,7 +64,9 @@ const NewRecordScreen = () => {
             />
           </View>
           <TouchableOpacity className="bg-primaryBlue px-10 py-2 rounded-lg">
-            <Text className="capitalize text-sm font-semibold text-primaryBg">submit</Text>
+            <Text className="capitalize text-sm font-semibold text-primaryBg">
+              submit
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
