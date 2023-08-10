@@ -16,6 +16,9 @@ const NewRecordScreen = () => {
     console.log(image);
   }, [image]);
 
+const NewRecordScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView className="bg-primaryBg w-full py-8 h-auto">
       <ScrollView>
