@@ -43,7 +43,7 @@ const Root = () => {
         }}
       />
       <Tab.Screen
-        name="New"
+        name="New Job"
         component={NewRecordScreen}
         options={{
           tabBarIcon: () => (

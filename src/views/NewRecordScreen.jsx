@@ -1,13 +1,20 @@
 import { Icon } from "react-native-eva-icons";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { TextInput } from "react-native";
 import { TouchableOpacity } from "react-native";
 import CameraComponent from "../components/Camera";
 import { useNavigation } from "@react-navigation/native";
+import { ImageContext } from "../services/state/Context";
+import LocationComponent from "../components/Location";
 
 const NewRecordScreen = () => {
   const navigation = useNavigation();
+  const { image } = useContext(ImageContext);
+
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
 
   return (
     <SafeAreaView className="bg-primaryBg w-full py-8 h-auto">
@@ -25,9 +32,26 @@ const NewRecordScreen = () => {
           </View>
           <View className="w-full space-y-2 mx-3">
             <Text className="text-sm font-semibold capitalize">Images</Text>
+            <View className="flex flex-row justify-center gap-x-3 items-center">
+              {image.length > 0 ? (
+                image.map(({ uri }) => (
+                  <Image
+                    key={uri.slice(-36)}
+                    source={{
+                      uri: `${uri}`,
+                    }}
+                    width={90}
+                    height={105}
+                  />
+                ))
+              ) : (
+                <View />
+              )}
+            </View>
+
             <TouchableOpacity
               className="px-4 py-3 border-none rounded-lg w-full flex flex-row justify-center items-center space-x-2 bg-secondaryBlue"
-              onPress={() => navigation.navigate('Camera')}
+              onPress={() => navigation.navigate("Camera")}
             >
               <Icon
                 name="cloud-upload-outline"
@@ -42,15 +66,7 @@ const NewRecordScreen = () => {
           </View>
           <View className="w-full space-y-2 mx-3">
             <Text className="text-sm font-semibold capitalize">Location</Text>
-            <TouchableOpacity
-              className="px-2 py-3 border-none rounded-lg w-full flex flex-row justify-center items-center space-x-2 bg-primaryBg border-[1px] border-primaryGray"
-              onPress={() => alert("set location")}
-            >
-              <Icon name="pin-outline" width={20} height={20} fill="#020617" />
-              <Text className="text-sm font-medium capitalize text-secondaryDark">
-                set location
-              </Text>
-            </TouchableOpacity>
+            <LocationComponent length={image.length} />
           </View>
           <View className="w-full space-y-2 mx-3">
             <Text className="text-sm font-semibold capitalize">
