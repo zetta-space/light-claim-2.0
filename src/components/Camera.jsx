@@ -1,12 +1,20 @@
-import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
-import { Camera, CameraType, FlashMode } from "expo-camera";
+
+import { View, Text, Button, TouchableOpacity } from "react-native";
+import React, { useContext, useRef, useState } from "react";
+import { Camera, CameraType } from "expo-camera";
 import { Icon } from "react-native-eva-icons";
+import { ImageContext } from "../services/state/Context";
+import { useNavigation } from "@react-navigation/native";
 
 const CameraComponent = () => {
   const camera = useRef();
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [cameraReady, setCameraReady] = useState(null);
+
+  const { updateImage } = useContext(ImageContext);
+  const navigation = useNavigation();
+
 
   if (!permission) {
     return <View />;
@@ -15,6 +23,9 @@ const CameraComponent = () => {
   if (!permission.granted) {
     return (
       <View className="flex-1 justify-center items-center">
+
+        <Text className="text-base font-medium px-2 text-center">
+          Requesting permission to access the camera
         <Text style={{ textAlign: "center" }}>
           We need your permission to show the camera
         </Text>
@@ -23,19 +34,26 @@ const CameraComponent = () => {
     );
   }
 
-  async function toggleCameraType() {
+  async function takeSnap() {
     const options = {
       quality: 1,
       base64: true,
       fixOrientation: true,
       exif: true,
     };
-    // setType((current) =>
-    //   current === CameraType.back ? CameraType.front : CameraType.back
-    // );
-    const snap = await camera.current.takePictureAsync(options);
-    const { uri } = snap;
-    console.log(uri);
+
+    if (cameraReady !== null) {
+      const { uri } = await camera.current.takePictureAsync(options);
+      updateImage(uri);
+    }
+
+    navigation.goBack();
+  }
+
+  function toggleCameraType() {
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
   }
 
   return (
@@ -45,12 +63,12 @@ const CameraComponent = () => {
         type={type}
         ref={camera}
         focusDepth={1}
-        onCameraReady={(e) => console.log("camera ready")}
+        onCameraReady={() => setCameraReady(1)}
       >
         <View className="flex-1 flex-col justify-end w-full items-center bg-transparent">
           <TouchableOpacity
             className="w-fit flex flex-row justify-center items-center"
-            onPress={() => toggleCameraType()}
+            onPress={() => takeSnap()}
           >
             <Icon
               name="radio-button-on"
@@ -72,32 +90,5 @@ const CameraComponent = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  camera: {
-    flex: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "transparent",
-    margin: 64,
-  },
-  button: {
-    flex: 1,
-    alignSelf: "flex-end",
-    alignItems: "center",
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "white",
-  },
-});
 
 export default CameraComponent;
