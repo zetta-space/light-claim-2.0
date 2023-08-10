@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "light-claim-2.0",
-    "slug": "light-claim-2.0",
+    "slug": "light-claim",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,15 +11,23 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zettatechnologies.lightclaim"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.zettatechnologies.lightclaim"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,6 +45,11 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "08e0538f-21c9-4356-84a3-bf0467d0a349"
+      }
+    }
   }
 }
