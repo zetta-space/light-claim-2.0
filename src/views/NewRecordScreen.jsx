@@ -3,7 +3,6 @@ import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { TextInput } from "react-native";
 import { TouchableOpacity } from "react-native";
-import CameraComponent from "../components/Camera";
 import { useNavigation } from "@react-navigation/native";
 import { ImageContext } from "../services/state/Context";
 import LocationComponent from "../components/Location";
